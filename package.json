@@ -1,0 +1,28 @@
+{
+  "name": "client-birthday-management",
+  "version": "1.0.0",
+  "description": "Client birthday management system with Telegram bot and admin panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "init-db": "node database/init.js"
+  },
+  "keywords": ["telegram", "bot", "birthday", "admin", "crm"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6",
+    "node-telegram-bot-api": "^0.64.0",
+    "bcryptjs": "^2.4.3",
+    "express-session": "^1.17.3",
+    "node-cron": "^3.0.3",
+    "dotenv": "^16.3.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

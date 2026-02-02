@@ -1,0 +1,236 @@
+/* Promotion Type Cards */
+.promo-type-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.promo-type-card {
+    position: relative;
+    cursor: pointer;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 1.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.promo-type-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(219, 39, 119, 0.15));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+}
+
+.promo-type-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(124, 58, 237, 0.6);
+    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.25);
+}
+
+.promo-type-card:hover::before {
+    opacity: 1;
+}
+
+.promo-type-card.selected {
+    border-color: #7c3aed;
+    background: rgba(124, 58, 237, 0.12);
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.3);
+}
+
+.promo-type-card.selected::before {
+    opacity: 1;
+}
+
+.promo-card-content {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+}
+
+.promo-card-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: grayscale(0.5) opacity(0.7);
+    transition: all 0.3s ease;
+}
+
+.promo-type-card:hover .promo-card-icon,
+.promo-type-card.selected .promo-card-icon {
+    filter: grayscale(0) opacity(1);
+    transform: scale(1.1);
+}
+
+.promo-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+}
+
+.promo-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.promo-type-checkmark {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #7c3aed, #db2777);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    animation: checkmarkPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+}
+
+.promo-type-card.selected .promo-type-checkmark {
+    display: flex;
+}
+
+@keyframes checkmarkPop {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Weekday Selector */
+.weekday-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.weekday-badge {
+    cursor: pointer;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.weekday-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.15), rgba(0, 242, 254, 0.15));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.weekday-badge:hover {
+    transform: translateY(-2px);
+    border-color: rgba(79, 172, 254, 0.5);
+    box-shadow: 0 4px 16px rgba(79, 172, 254, 0.2);
+}
+
+.weekday-badge:hover::before {
+    opacity: 1;
+}
+
+.weekday-badge input[type="checkbox"]:checked+.weekday-text {
+    color: #4facfe;
+    font-weight: 600;
+}
+
+.weekday-badge input[type="checkbox"]:checked~.weekday-badge::before,
+.weekday-badge:has(input[type="checkbox"]:checked) {
+    background: rgba(79, 172, 254, 0.15);
+    border-color: #4facfe;
+    box-shadow: 0 4px 20px rgba(79, 172, 254, 0.3);
+}
+
+.weekday-badge:has(input[type="checkbox"]:checked)::before {
+    opacity: 1;
+}
+
+.weekday-badge:has(input[type="checkbox"]:checked)::after {
+    content: '✓';
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    animation: checkmarkPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.weekday-text {
+    position: relative;
+    z-index: 1;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+/* Responsive weekday selector */
+@media (max-width: 768px) {
+    .weekday-selector {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .weekday-badge {
+        padding: 0.875rem 1rem;
+    }
+
+    .weekday-text {
+        font-size: 0.85rem;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .promo-type-selection {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .promo-type-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .promo-card-icon {
+        font-size: 2.5rem;
+    }
+}

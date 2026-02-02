@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Client Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/promo-cards.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>🎂 Admin Dashboard</h1>
+            <div class="user-info">
+                <span class="user-name">👤 <span id="currentUser"></span></span>
+                <button class="btn-logout" id="logoutBtn">Chiqish</button>
+            </div>
+        </div>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="clients">
+                👥 Barcha klientlar
+            </button>
+            <button class="nav-tab" data-tab="birthdays">
+                🎂 Tug'ilgan kunlar
+            </button>
+            <button class="nav-tab" data-tab="promotions">
+                🎁 Aksiyalar
+            </button>
+        </nav>
+
+        <!-- Clients Tab -->
+        <div id="clients-tab" class="tab-content active">
+            <div class="card" style="margin-bottom: 2rem;">
+                <div class="card-header">
+                    <h2 class="card-title">Yangi klient qo'shish</h2>
+                    <button class="btn-small btn-success" onclick="showAddClientModal()">
+                        ➕ Yangi klient
+                    </button>
+                </div>
+            </div>
+            <div id="clientsList"></div>
+        </div>
+
+        <!-- Birthdays Tab -->
+        <div id="birthdays-tab" class="tab-content">
+            <div id="birthdaysList"></div>
+        </div>
+
+        <!-- Promotions Tab -->
+        <div id="promotions-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Yangi aksiya yaratish</h2>
+                </div>
+                <form id="promotionForm">
+                    <div class="form-group">
+                        <label for="promotionName">Aksiya nomi *</label>
+                        <input type="text" id="promotionName" required placeholder="Masalan: Bahor aksiyasi">
+                    </div>
+                    <div class="form-group">
+                        <label for="promotionDescription">Tavsif</label>
+                        <input type="text" id="promotionDescription" placeholder="Aksiya haqida qisqacha ma'lumot">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem; display: block;">Aksiya
+                            turini tanlang *</label>
+                        <div class="promo-type-selection">
+                            <div class="promo-type-card selected" data-type="date_range"
+                                onclick="selectPromoType('date_range')">
+                                <input type="radio" name="promotionType" value="date_range" checked
+                                    style="display: none;">
+                                <div class="promo-card-content">
+                                    <span class="promo-card-icon">📅</span>
+                                    <div class="promo-card-title">Sanalar orqali</div>
+                                    <div class="promo-card-desc">Muayyan sanadan boshlab ma'lum sanagacha</div>
+                                </div>
+                                <div class="promo-type-checkmark">✓</div>
+                            </div>
+                            <div class="promo-type-card" data-type="weekly" onclick="selectPromoType('weekly')">
+                                <input type="radio" name="promotionType" value="weekly" style="display: none;">
+                                <div class="promo-card-content">
+                                    <span class="promo-card-icon">📆</span>
+                                    <div class="promo-card-title">Haftalik takrorlanuvchi</div>
+                                    <div class="promo-card-desc">Haftaning belgilangan kunlarida</div>
+                                </div>
+                                <div class="promo-type-checkmark">✓</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date Range Fields -->
+                    <div id="dateRangeFields">
+                        <div class="form-group">
+                            <label for="promotionStartDate">Boshlanish sanasi *</label>
+                            <input type="date" id="promotionStartDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="promotionEndDate">Tugash sanasi *</label>
+                            <input type="date" id="promotionEndDate">
+                        </div>
+                    </div>
+
+                    <!-- Weekly Schedule Fields -->
+                    <div id="weeklyFields" style="display: none;">
+                        <div class="form-group">
+                            <label
+                                style="font-weight: 600; font-size: 1rem; margin-bottom: 1rem; display: block;">Haftaning
+                                kunlarini tanlang *</label>
+                            <div class="weekday-selector">
+                                <label class="weekday-badge" data-day="1">
+                                    <input type="checkbox" name="weekDays" value="1" style="display: none;">
+                                    <span class="weekday-text">Dushanba</span>
+                                </label>
+                                <label class="weekday-badge" data-day="2">
+                                    <input type="checkbox" name="weekDays" value="2" style="display: none;">
+                                    <span class="weekday-text">Seshanba</span>
+                                </label>
+                                <label class="weekday-badge" data-day="3">
+                                    <input type="checkbox" name="weekDays" value="3" style="display: none;">
+                                    <span class="weekday-text">Chorshanba</span>
+                                </label>
+                                <label class="weekday-badge" data-day="4">
+                                    <input type="checkbox" name="weekDays" value="4" style="display: none;">
+                                    <span class="weekday-text">Payshanba</span>
+                                </label>
+                                <label class="weekday-badge" data-day="5">
+                                    <input type="checkbox" name="weekDays" value="5" style="display: none;">
+                                    <span class="weekday-text">Juma</span>
+                                </label>
+                                <label class="weekday-badge" data-day="6">
+                                    <input type="checkbox" name="weekDays" value="6" style="display: none;">
+                                    <span class="weekday-text">Shanba</span>
+                                </label>
+                                <label class="weekday-badge" data-day="0">
+                                    <input type="checkbox" name="weekDays" value="0" style="display: none;">
+                                    <span class="weekday-text">Yakshanba</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Aksiya yaratish va xabar yuborish</button>
+                </form>
+            </div>
+
+            <div id="promotionsList"></div>
+        </div>
+    </div>
+
+    <!-- Edit Client Modal -->
+    <div id="editClientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Klientni tahrirlash</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="editClientForm">
+                <input type="hidden" id="editClientId">
+                <div class="form-group">
+                    <label for="editFirstName">Ism *</label>
+                    <input type="text" id="editFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editLastName">Familiya *</label>
+                    <input type="text" id="editLastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPhone">Telefon raqam *</label>
+                    <input type="text" id="editPhone" required>
+                </div>
+                <div id="childrenContainer"></div>
+                <button type="submit" class="btn">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Client Modal -->
+    <div id="addClientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Yangi klient qo'shish</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="addClientForm">
+                <div class="form-group">
+                    <label for="addFirstName">Ism *</label>
+                    <input type="text" id="addFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="addLastName">Familiya *</label>
+                    <input type="text" id="addLastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="addPhone">Telefon raqam *</label>
+                    <input type="text" id="addPhone" required placeholder="+998901234567">
+                </div>
+                <h4 style="margin: 1.5rem 0 1rem;">Farzandlar (ixtiyoriy):</h4>
+                <div id="addChildrenContainer"></div>
+                <button type="button" class="btn-small btn-success" onclick="addChildField()"
+                    style="margin-bottom: 1rem;">
+                    ➕ Farzand qo'shish
+                </button>
+                <button type="submit" class="btn">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Promotion Modal -->
+    <div id="editPromotionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Aksiyani tahrirlash</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="editPromotionForm">
+                <input type="hidden" id="editPromotionId">
+                <div class="form-group">
+                    <label for="editPromotionName">Aksiya nomi *</label>
+                    <input type="text" id="editPromotionName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPromotionDescription">Tavsif</label>
+                    <input type="text" id="editPromotionDescription">
+                </div>
+                <div class="form-group">
+                    <label for="editPromotionStartDate">Boshlanish sanasi</label>
+                    <input type="date" id="editPromotionStartDate">
+                </div>
+                <div class="form-group">
+                    <label for="editPromotionEndDate">Tugash sanasi</label>
+                    <input type="date" id="editPromotionEndDate">
+                </div>
+                <button type="submit" class="btn">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/clients.js"></script>
+    <script src="/js/birthdays.js"></script>
+    <script src="/js/promotions.js"></script>
+    <script>
+        // Check authentication on page load
+        checkAuth();
+
+        // Initialize tabs
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+
+                // Update active tab
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Show corresponding content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+
+                // Load data for the tab
+                if (tabName === 'clients') loadClients();
+                if (tabName === 'birthdays') loadBirthdays();
+                if (tabName === 'promotions') loadPromotions();
+            });
+        });
+
+        // Close modals
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('show');
+                });
+            });
+        });
+
+        // Load initial data
+        loadClients();
+    </script>
+</body>
+
+</html>
