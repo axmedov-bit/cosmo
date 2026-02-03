@@ -8,7 +8,17 @@
     "dev": "nodemon server.js",
     "init-db": "node database/init.js"
   },
-  "keywords": ["telegram", "bot", "birthday", "admin", "crm"],
+  "keywords": [
+    "telegram",
+    "bot",
+    "birthday",
+    "admin",
+    "crm"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {

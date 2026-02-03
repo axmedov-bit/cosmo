@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: cosmo-birthday-app
+    runtime: node
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: TZ
+        value: Asia/Tashkent
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: DATABASE_PATH
+        value: /var/data/clients.db
+    disk:
+      name: cosmo-data
+      mountPath: /var/data
+      sizeGB: 1

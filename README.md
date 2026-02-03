@@ -228,6 +228,29 @@ Vaqt zonasi: Asia/Tashkent (GMT+5)
 
 Scheduler: Har kuni soat 9:00 AM
 
+## 🌐 Deployment (Production)
+
+Ilovani internetga chiqarish uchun **Render.com** yoki boshqa Node.js hostingdan foydalaning.
+
+> **📖 Batafsil ko'rsatma:** [DEPLOYMENT.md](file:///c:/Users/User/OneDrive/Рабочий%20стол/COSMO/DEPLOYMENT.md) faylida to'liq deploy qilish ko'rsatmasi mavjud (rus tilida).
+
+**Qisqacha:**
+1. Kodni GitHub'ga yuklang
+2. Render.com'da akkaunt yarating
+3. Blueprint orqali loyihani ulang
+4. Environment o'zgaruvchilarini sozlang (bot token, parol)
+5. Deploy qiling
+
+✅ **Nima kerak:**
+- GitHub repository
+- Telegram bot token
+- Render.com (bepul)
+
+📄 **Yaratilgan deployment fayllar:**
+- `render.yaml` - auto-deploy konfiguratsiya
+- `.renderignore` - keraksiz fayllarni chiqarib tashlash
+- `DEPLOYMENT.md` - to'liq ko'rsatma
+
 ## 🎁 Loyiha Strukturasi
 
 ```
