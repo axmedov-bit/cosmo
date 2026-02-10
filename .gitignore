@@ -4,3 +4,6 @@ node_modules/
 # database/*.db-journal
 *.log
 .DS_Store
+
+# Vercel
+.vercel

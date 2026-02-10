@@ -51,32 +51,40 @@ app.get('/', (req, res) => {
 
 console.log('✓ Routes configured');
 
-// Start Telegram bot
-console.log('Starting Telegram bot...');
-try {
-    require('./bot/index');
-    console.log('✓ Telegram bot started');
-} catch (err) {
-    console.error('✗ Bot error:', err.message);
-}
+// Detect if running on Vercel (serverless environment)
+const isVercel = process.env.VERCEL === '1';
 
-// Start scheduler
-console.log('Starting scheduler...');
-try {
-    require('./scheduler/index');
-    console.log('✓ Scheduler started');
-} catch (err) {
-    console.error('✗ Scheduler error:', err.message);
-}
+if (!isVercel) {
+    // Start Telegram bot (only in non-serverless environment)
+    console.log('Starting Telegram bot...');
+    try {
+        require('./bot/index');
+        console.log('✓ Telegram bot started');
+    } catch (err) {
+        console.error('✗ Bot error:', err.message);
+    }
 
-// Start server
-app.listen(PORT, () => {
-    console.log('\n========================================');
-    console.log(`✓ Server running on http://localhost:${PORT}`);
-    console.log('========================================\n');
-    console.log('Admin Panel: http://localhost:' + PORT);
-    console.log('Login: admin / ' + (process.env.ADMIN_PASSWORD || 'admin123'));
-    console.log('\n========================================');
-});
+    // Start scheduler (only in non-serverless environment)
+    console.log('Starting scheduler...');
+    try {
+        require('./scheduler/index');
+        console.log('✓ Scheduler started');
+    } catch (err) {
+        console.error('✗ Scheduler error:', err.message);
+    }
+
+    // Start server (only in non-serverless environment)
+    app.listen(PORT, () => {
+        console.log('\n========================================');
+        console.log(`✓ Server running on http://localhost:${PORT}`);
+        console.log('========================================\n');
+        console.log('Admin Panel: http://localhost:' + PORT);
+        console.log('Login: admin / ' + (process.env.ADMIN_PASSWORD || 'admin123'));
+        console.log('\n========================================');
+    });
+} else {
+    console.log('⚠️ Running on Vercel - Bot and Scheduler disabled');
+    console.log('✓ Admin Panel API only');
+}
 
 module.exports = app;
